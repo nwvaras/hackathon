@@ -48,15 +48,17 @@ def align(filename):
     print(filepath2)
     RAW_IMAGES_DIR = filepath
     ALIGNED_IMAGES_DIR = filepath2
-    img_name = filename.split("/")[1]
 
 
-    raw_img_path = os.path.join(RAW_IMAGES_DIR, img_name)
-    for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
-        face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
-        aligned_face_path = os.path.join(ALIGNED_IMAGES_DIR, face_img_name)
+    for img_name in os.listdir(RAW_IMAGES_DIR):
+        if img_name in filename:
+            print("alineando...")
+            raw_img_path = os.path.join(RAW_IMAGES_DIR, img_name)
+            for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
+                face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
+                aligned_face_path = os.path.join(ALIGNED_IMAGES_DIR, face_img_name)
 
-        image_align(raw_img_path, aligned_face_path, face_landmarks)
+                image_align(raw_img_path, aligned_face_path, face_landmarks)
 
 def index(request):
     return render(request, 'api/index.html')

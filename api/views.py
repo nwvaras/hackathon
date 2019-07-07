@@ -6,7 +6,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.generate_figures import test_single_image
+from api.generate_figures import test_single_image, test_single_image_easy_peasy
 from api.models import Photo
 from api.serializers import PhotoSerializer, SearchPhotoSerializer
 import subprocess
@@ -224,10 +224,6 @@ class PhotoSearchList(APIView):
             image.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-def test_single_image_easy_peasy(name, param, w, h, src_seeds, dst_seeds, style_ranges):
-    pass
 
 
 class PhotoSearchDetail(APIView):

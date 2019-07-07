@@ -6,8 +6,9 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.generate_figures import test_single_image
 from api.models import Photo
-from api.serializers import PhotoSerializer
+from api.serializers import PhotoSerializer, SearchPhotoSerializer
 import subprocess
 
 import os
@@ -193,6 +194,63 @@ class PhotoDetail(APIView):
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
         serializer = PhotoSerializer(photo, data=request.DATA)
+        if serializer.is_valid():
+            instance = serializer.save()
+            # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        photo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def pre_save(self, obj):
+        obj.owner = self.request.user
+
+
+class SearchPhotoList(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def post(self, request):
+        serializer = PhotoSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            image = serializer.save()
+            print(image.image.name)
+            filenames = align(image.image.name)
+            print(filenames)
+            for filename in filenames:
+                image.latent_filename = filename
+            image.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def test_single_image_easy_peasy(name, param, w, h, src_seeds, dst_seeds, style_ranges):
+    pass
+
+
+class SearchPhotoDetail(APIView):
+
+    permission_classes = (permissions.AllowAny,)
+
+    def get_object(self, pk):
+        try:
+            photo = Photo.objects.get(pk=pk)
+            result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
+            if result_filename is not None:
+                pho.result
+        except Photo.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = SearchPhotoSerializer(photo)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = SearchPhotoSerializer(photo, data=request.DATA)
         if serializer.is_valid():
             instance = serializer.save()
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))

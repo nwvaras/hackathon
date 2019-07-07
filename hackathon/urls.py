@@ -24,6 +24,8 @@ from hackathon import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^api/search/$', views.PhotoSearchList.as_view(), name='search-photo'),
+    url(r'^api/search/(?P<pk>[0-9]+)/$', views.PhotoSearchDetail.as_view(), name='search-photo-detail'),
     url(r'^api/photo/$', views.PhotoList.as_view(), name='photo'),
     url(r'^api/photo/(?P<pk>[0-9]+)/$', views.PhotoDetail.as_view(), name='photo-detail')
 ]

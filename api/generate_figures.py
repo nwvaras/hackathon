@@ -84,7 +84,7 @@ def draw_style_mixing_figure(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
             canvas.paste(PIL.Image.fromarray(image, 'RGB'), ((col + 1) * w, (row + 1) * h))
     canvas.save(png)
 
-def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
+def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges, latent_filename):
     print(png)
     src_latents = np.stack(np.random.RandomState(seed).randn(Gs.input_shape[1]) for seed in src_seeds)
     dst_latents = np.stack(np.random.RandomState(seed).randn(Gs.input_shape[1]) for seed in dst_seeds)
@@ -93,8 +93,8 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
     from os import path
 
     basepath = path.dirname(__file__)
-    filepath2 = path.abspath(path.join(basepath, "..", "media/latent_representations/7MAR7MJO_8O7ZObH_01.npy"))
-    result = path.abspath(path.join(basepath, "..", "media/latent_representations/",png))
+    filepath2 = path.abspath(path.join(basepath, "..", f"media/latent_representations/{latent_filename}.npy"))
+    result = path.abspath(path.join(basepath, "..", "media/results/",png))
     print(result)
     dst_dlatents = np.stack([np.load(filepath2),
                              np.load(filepath2),
@@ -117,8 +117,10 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
         row_images = Gs.components.synthesis.run(row_dlatents, randomize_noise=False, **synthesis_kwargs)
         for col, image in enumerate(list(row_images)):
             PIL.Image.fromarray(image, 'RGB').save(result, "PNG")
-            break
+            return result
 
+def test_single_image_ease_peasy(filename, latent_filename):
+    return test_single_image(filename, load_Gs(url_ffhq), w=1024, h=1024, src_seeds=[687,687,687,687,687], dst_seeds=[888,829,1898,1733,1614,845], style_ranges=[range(0,4)]*3+[range(0,4)]*2+[range(0,4)], latent_filename=latent_filename)
 
 #----------------------------------------------------------------------------
 # Figure 4: Noise detail.

@@ -37,8 +37,15 @@ def align():
 
     landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
                                                LANDMARKS_MODEL_URL, cache_subdir='temp'))
-    RAW_IMAGES_DIR = "../media/photos/"
-    ALIGNED_IMAGES_DIR = "../media/aligned_photos/"
+    from os import path
+
+    basepath = path.dirname(__file__)
+    filepath = path.abspath(path.join(basepath, "..", "media/photos/"))
+    filepath2 = path.abspath(path.join(basepath, "..", "media/aligned_photos/"))
+    print(filepath)
+    print(filepath2)
+    RAW_IMAGES_DIR = filepath
+    ALIGNED_IMAGES_DIR = filepath2
 
     landmarks_detector = LandmarksDetector(landmarks_model_path)
     for img_name in os.listdir(RAW_IMAGES_DIR):

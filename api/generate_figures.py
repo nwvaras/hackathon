@@ -108,9 +108,9 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
     canvas = PIL.Image.new('RGB', (w * (len(src_seeds) + 1), h * (len(dst_seeds) + 1)), 'white')
     for col, src_image in enumerate(list(src_images)):
         print("jeje")
-        # canvas.paste(PIL.Image.fromarray(src_image, 'RGB'), ((col + 1) * w, 0))
+        canvas.paste(PIL.Image.fromarray(src_image, 'RGB'), ((col + 1) * w, 0))
     for row, dst_image in enumerate(list(dst_images)):
-        # canvas.paste(PIL.Image.fromarray(dst_image, 'RGB'), (0, (row + 1) * h))
+        canvas.paste(PIL.Image.fromarray(dst_image, 'RGB'), (0, (row + 1) * h))
         row_dlatents = np.stack([dst_dlatents[row]] * len(src_seeds))
         row_dlatents[:, style_ranges[row]] = src_dlatents[:, style_ranges[row]]
         row_images = Gs.components.synthesis.run(row_dlatents, randomize_noise=False, **synthesis_kwargs)

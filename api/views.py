@@ -26,17 +26,19 @@ def unpack_bz2(src_path):
     with open(dst_path, 'wb') as fp:
         fp.write(data)
     return dst_path
+landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
+                                               LANDMARKS_MODEL_URL, cache_subdir='temp'))
+landmarks_detector = LandmarksDetector(landmarks_model_path)
 
-
-def align():
+def align(filename):
     """
     Extracts and aligns all faces from images using DLib and a function from original FFHQ dataset preparation step
     python align_images.py /raw_images /aligned_images
     """
     print("align!")
+    print(filename)
 
-    landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
-                                               LANDMARKS_MODEL_URL, cache_subdir='temp'))
+
     from os import path
 
     basepath = path.dirname(__file__)
@@ -47,7 +49,7 @@ def align():
     RAW_IMAGES_DIR = filepath
     ALIGNED_IMAGES_DIR = filepath2
 
-    landmarks_detector = LandmarksDetector(landmarks_model_path)
+
     for img_name in os.listdir(RAW_IMAGES_DIR):
         raw_img_path = os.path.join(RAW_IMAGES_DIR, img_name)
         for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
@@ -92,7 +94,7 @@ class PhotoDetail(APIView):
         serializer = PhotoSerializer(photo, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
-            align()
+            align(serializer.data.image.name)
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -13,7 +13,7 @@ import sys
 import pickle
 import numpy as np
 import PIL.Image
-import api.dnnlib
+import api.dnnlib as dnnlib
 import api.dnnlib.tflib as tflib
 import api.config
 sys.modules['dnnlib'] = dnnlib

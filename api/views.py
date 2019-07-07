@@ -72,8 +72,9 @@ def main(filename):
     # parser.add_argument('--randomize_noise', default=False, help='Add noise to dlatents during optimization', type=bool)
     randomize_noise= False
     # args, other_args = parser.parse_known_args()
+    basepath = os.path.dirname(__file__)
     print(os.path.join("..",src_dir))
-    ref_images = [os.path.join("..",src_dir, x) for x in os.listdir(os.path.join("..",src_dir))]
+    ref_images = [os.path.join(basepath,"..",src_dir, x) for x in os.listdir(os.path.join(basepath,"..",src_dir))]
     ref_images = list(filter(os.path.isfile, ref_images))
 
     if len(ref_images) == 0:
@@ -108,8 +109,8 @@ def main(filename):
         generated_dlatents = generator.get_dlatents()
         for img_array, dlatent, img_name in zip(generated_images, generated_dlatents, names):
             img = PIL.Image.fromarray(img_array, 'RGB')
-            img.save(os.path.join("..",generated_images_dir, f'{img_name}.png'), 'PNG')
-            np.save(os.path.join("..",dlatent_dir, f'{img_name}.npy'), dlatent)
+            img.save(os.path.join(basepath,"..",generated_images_dir, f'{img_name}.png'), 'PNG')
+            np.save(os.path.join(basepath,"..",dlatent_dir, f'{img_name}.npy'), dlatent)
 
         generator.reset_dlatents()
 

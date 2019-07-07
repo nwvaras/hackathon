@@ -98,6 +98,7 @@ def main(filename):
 
     # Optimize (only) dlatents by minimizing perceptual loss between reference and generated images in feature space
     print(filename)
+    filenames = []
     for images_batch in tqdm(split_to_batches(ref_images, batch_size), total=len(ref_images)//batch_size):
         names = [os.path.splitext(os.path.basename(x))[0] for x in images_batch]
 
@@ -115,8 +116,11 @@ def main(filename):
             img = PIL.Image.fromarray(img_array, 'RGB')
             img.save(os.path.join(basepath,"..",generated_images_dir, f'{img_name}.png'), 'PNG')
             np.save(os.path.join(basepath,"..",dlatent_dir, f'{img_name}.npy'), dlatent)
+            filenames.append(f'{img_name}.npy')
 
         generator.reset_dlatents()
+    return filenames
+
 
 def align(filename):
     """
@@ -160,10 +164,13 @@ class PhotoList(APIView):
     def post(self, request):
         serializer = PhotoSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
-            image =serializer.save()
-            # print(serializer.save())
-            align(image.image.name)
-
+            image = serializer.save()
+            print(image.image.name)
+            filenames = align(image.image.name)
+            print(filenames)
+            for filename in filenames:
+                image.latent_filename = filename
+            image.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -187,7 +194,7 @@ class PhotoDetail(APIView):
         photo = self.get_object(pk)
         serializer = PhotoSerializer(photo, data=request.DATA)
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

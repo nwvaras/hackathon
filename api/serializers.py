@@ -8,10 +8,10 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
         model = Photo
         fields = ('url', 'id', 'image')
 
-    result_image = serializers.SerializerMethodField()
-
 
 class SearchPhotoSerializer(serializers.HyperlinkedModelSerializer):
+    image = serializers.SerializerMethodField()
+    
     class Meta:
         model = Photo
         fields = ('url', 'id', 'image')

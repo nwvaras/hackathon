@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from api.models import Photo
 from api.serializers import PhotoSerializer
 import subprocess
-from align_images import align
+from ml.align_images import align
 def index(request):
     return render(request, 'api/index.html')
 

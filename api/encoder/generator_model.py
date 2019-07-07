@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-import dnnlib.tflib as tflib
+import api.dnnlib as tflib
 from functools import partial
 
 

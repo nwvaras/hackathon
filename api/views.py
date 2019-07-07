@@ -75,7 +75,7 @@ def main(filename):
     # args, other_args = parser.parse_known_args()
     basepath = os.path.dirname(__file__)
     print(os.path.join("..",src_dir))
-    ref_images = [os.path.join(basepath,"..",src_dir, x) for x in os.listdir(os.path.join(basepath,"..",src_dir))]
+    ref_images = [os.path.join(basepath,"..",src_dir, filename.split("/")[1])]
     ref_images = list(filter(os.path.isfile, ref_images))
 
     if len(ref_images) == 0:
@@ -144,7 +144,7 @@ def align(filename):
                 aligned_face_path = os.path.join(ALIGNED_IMAGES_DIR, face_img_name)
 
                 image_align(raw_img_path, aligned_face_path, face_landmarks)
-    main("test")
+    main(filename)
 
 def index(request):
     return render(request, 'api/index.html')

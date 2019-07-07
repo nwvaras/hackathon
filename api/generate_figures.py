@@ -15,7 +15,7 @@ import numpy as np
 import PIL.Image
 import api.dnnlib as dnnlib
 import api.dnnlib.tflib as tflib
-import api.config
+import api.config as config
 sys.modules['dnnlib'] = dnnlib
 sys.modules['tflib'] = tflib
 #----------------------------------------------------------------------------

@@ -9,7 +9,6 @@ from rest_framework.views import APIView
 from api.models import Photo
 from api.serializers import PhotoSerializer
 import subprocess
-subprocess.run(["ls", "-l"])
 
 def index(request):
     return render(request, 'api/index.html')

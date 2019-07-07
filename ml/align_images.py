@@ -24,8 +24,8 @@ if __name__ == "__main__":
 
     landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
                                                LANDMARKS_MODEL_URL, cache_subdir='temp'))
-    RAW_IMAGES_DIR = sys.argv[1]
-    ALIGNED_IMAGES_DIR = sys.argv[2]
+    RAW_IMAGES_DIR = "../api/media/photos/" "../api/media/aligned_photos/"
+    ALIGNED_IMAGES_DIR = "../api/media/aligned_photos/"
 
     landmarks_detector = LandmarksDetector(landmarks_model_path)
     for img_name in os.listdir(RAW_IMAGES_DIR):

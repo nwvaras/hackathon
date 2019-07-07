@@ -45,7 +45,7 @@ class PhotoDetail(APIView):
         serializer = PhotoSerializer(photo, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
-            print(subprocess.run(["python align_images.py media/photos/ media/aligned_photos/"]))
+            # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

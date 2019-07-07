@@ -21,10 +21,11 @@ def align():
     Extracts and aligns all faces from images using DLib and a function from original FFHQ dataset preparation step
     python align_images.py /raw_images /aligned_images
     """
+    print("align!")
 
     landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
                                                LANDMARKS_MODEL_URL, cache_subdir='temp'))
-    RAW_IMAGES_DIR = "../api/media/photos/" "../api/media/aligned_photos/"
+    RAW_IMAGES_DIR = "../api/media/photos/"
     ALIGNED_IMAGES_DIR = "../api/media/aligned_photos/"
 
     landmarks_detector = LandmarksDetector(landmarks_model_path)

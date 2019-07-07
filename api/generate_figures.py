@@ -94,7 +94,8 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
 
     basepath = path.dirname(__file__)
     filepath2 = path.abspath(path.join(basepath, "..", "media/latent_representations/index_VNTSC9A_01.npy"))
-    result = path.abspath(path.join(basepath, "..", "media/latent_representations/"))
+    result = path.abspath(path.join(basepath, "..", "media/latent_representations/",png))
+    print(result)
     dst_dlatents = np.stack([np.load(filepath2),
                              np.load(filepath2),
                              np.load(filepath2),
@@ -116,7 +117,7 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
         row_images = Gs.components.synthesis.run(row_dlatents, randomize_noise=False, **synthesis_kwargs)
         for col, image in enumerate(list(row_images)):
             canvas.paste(PIL.Image.fromarray(image, 'RGB'), ((col + 1) * w, (row + 1) * h))
-    canvas.save(result+png)
+    canvas.save(result)
 
 #----------------------------------------------------------------------------
 # Figure 4: Noise detail.

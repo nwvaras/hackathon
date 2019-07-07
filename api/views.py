@@ -14,8 +14,8 @@ import os
 import sys
 import bz2
 from keras.utils import get_file
-from .ffhq_dataset.face_alignment import image_align
-from .ffhq_dataset.landmarks_detector import LandmarksDetector
+from api.ffhq_dataset.face_alignment import image_align
+from api.ffhq_dataset.landmarks_detector import LandmarksDetector
 import os
 import argparse
 import pickle
@@ -25,8 +25,8 @@ import numpy as np
 from api import dnnlib
 from api.dnnlib import tflib
 from api import config
-from .encoder.generator_model import Generator
-from .encoder.perceptual_model import PerceptualModel
+from api.encoder.generator_model import Generator
+from api.encoder.perceptual_model import PerceptualModel
 
 URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'  # karras2019stylegan-ffhq-1024x1024.pkl
 

@@ -249,7 +249,7 @@ class PhotoSearchDetail(APIView):
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = SearchPhotoSerializer(photo, data=request.DATA)
+        serializer = SearchPhotoSerializer(photo, data=request.DATA, context={'request': request})
         if serializer.is_valid():
             instance = serializer.save()
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))

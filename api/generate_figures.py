@@ -90,12 +90,16 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
     dst_latents = np.stack(np.random.RandomState(seed).randn(Gs.input_shape[1]) for seed in dst_seeds)
     src_dlatents = Gs.components.mapping.run(src_latents, None) # [seed, layer, component]
     # dst_dlatents = Gs.components.mapping.run(dst_latents, None) # [seed, layer, component]
-    dst_dlatents = np.stack([np.load('latent_representations/index_VNTSC9A_01.npy'),
-                             np.load('latent_representations/index_VNTSC9A_01.npy'),
-                             np.load('latent_representations/index_VNTSC9A_01.npy'),
-                             np.load('latent_representations/index_VNTSC9A_01.npy'),
-                             np.load('latent_representations/index_VNTSC9A_01.npy'),
-                             np.load('latent_representations/index_VNTSC9A_01.npy')])
+    from os import path
+
+    basepath = path.dirname(__file__)
+    filepath2 = path.abspath(path.join(basepath, "..", "media/latent_representations/index_VNTSC9A_01.npy"))
+    dst_dlatents = np.stack([np.load(filepath2),
+                             np.load(filepath2),
+                             np.load(filepath2),
+                             np.load(filepath2),
+                             np.load(filepath2),
+                             np.load(filepath2)])
 
     src_images = Gs.components.synthesis.run(src_dlatents, randomize_noise=False, **synthesis_kwargs)
     dst_images = Gs.components.synthesis.run(dst_dlatents, randomize_noise=False, **synthesis_kwargs)

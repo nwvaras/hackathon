@@ -85,7 +85,7 @@ def main(filename):
     os.makedirs(dlatent_dir, exist_ok=True)
 
     # Initialize generator and perceptual model
-
+    tflib.init_tf()
     with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
         generator_network, discriminator_network, Gs_network = pickle.load(f)
 

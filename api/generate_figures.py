@@ -123,6 +123,7 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges, latent_
             return result
 
 def test_single_image_easy_peasy(filename, latent_filename):
+    tflib.init_tf()
     return test_single_image(filename, load_Gs(url_ffhq), w=1024, h=1024, src_seeds=[687,687,687,687,687], dst_seeds=[888,829,1898,1733,1614,845], style_ranges=[range(0,4)]*3+[range(0,4)]*2+[range(0,4)], latent_filename=latent_filename)
 
 #----------------------------------------------------------------------------

@@ -8,13 +8,16 @@
 """Minimal script for reproducing the figures of the StyleGAN paper using pre-trained generators."""
 
 import os
+import sys
+
 import pickle
 import numpy as np
 import PIL.Image
-import dnnlib
-import dnnlib.tflib as tflib
-import config
-
+import api.dnnlib as dnnlib
+import api.dnnlib.tflib as tflib
+import api.config
+sys.modules['dnnlib'] = dnnlib
+sys.modules['tflib'] = tflib
 #----------------------------------------------------------------------------
 # Helpers for loading and using pre-trained generators.
 

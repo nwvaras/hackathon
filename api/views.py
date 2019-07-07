@@ -209,7 +209,7 @@ class PhotoDetail(APIView):
         obj.owner = self.request.user
 
 
-class SearchPhotoList(APIView):
+class PhotoSearchList(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request):
@@ -230,7 +230,7 @@ def test_single_image_easy_peasy(name, param, w, h, src_seeds, dst_seeds, style_
     pass
 
 
-class SearchPhotoDetail(APIView):
+class PhotoSearchDetail(APIView):
 
     permission_classes = (permissions.AllowAny,)
 

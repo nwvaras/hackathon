@@ -23,7 +23,7 @@ from tqdm import tqdm
 import PIL.Image
 import numpy as np
 from api import dnnlib
-from api import tflib
+from api.dnnlib import tflib
 from api import config
 from .encoder.generator_model import Generator
 from .encoder.perceptual_model import PerceptualModel

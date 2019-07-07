@@ -42,7 +42,7 @@ def align(filename):
     from os import path
 
     basepath = path.dirname(__file__)
-    filepath = path.abspath(path.join(basepath, "..", "media/"))
+    filepath = path.abspath(path.join(basepath, "..", "media/photos"))
     filepath2 = path.abspath(path.join(basepath, "..", "media/aligned_photos/"))
     print(filepath)
     print(filepath2)

@@ -69,7 +69,8 @@ class PhotoList(APIView):
         serializer = PhotoSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
-            align(serializer.data.image.name)
+            print(serializer.save())
+            align(serializer.save().image.name)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

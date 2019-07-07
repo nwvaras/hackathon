@@ -22,8 +22,8 @@ import pickle
 from tqdm import tqdm
 import PIL.Image
 import numpy as np
-from .dnnlib import util
-from .dnnlib import tflib as tflib
+from api import dnnlib
+from api import tflib
 from api import config
 from .encoder.generator_model import Generator
 from .encoder.perceptual_model import PerceptualModel
@@ -85,7 +85,7 @@ def main(filename):
 
     # Initialize generator and perceptual model
 
-    with util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
+    with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
         generator_network, discriminator_network, Gs_network = pickle.load(f)
 
     generator = Generator(Gs_network, batch_size, randomize_noise=randomize_noise)

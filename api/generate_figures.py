@@ -93,7 +93,7 @@ def test_single_image(png, Gs, w, h, src_seeds, dst_seeds, style_ranges):
     from os import path
 
     basepath = path.dirname(__file__)
-    filepath2 = path.abspath(path.join(basepath, "..", "media/latent_representations/index_VNTSC9A_01.npy"))
+    filepath2 = path.abspath(path.join(basepath, "..", "media/latent_representations/7MAR7MJO_8O7ZObH_01.npy"))
     result = path.abspath(path.join(basepath, "..", "media/latent_representations/",png))
     print(result)
     dst_dlatents = np.stack([np.load(filepath2),

@@ -233,7 +233,7 @@ class PhotoSearchDetail(APIView):
     def get_object(self, pk):
         try:
             photo = Photo.objects.get(pk=pk)
-            result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
+            result_filename = test_single_image_easy_peasy(photo.image.name, photo.latent_filename)
             if result_filename is not None:
                 serializer = SearchPhotoSerializer(photo, context={"request": self.request})
                 return Response(serializer.data)
@@ -242,7 +242,7 @@ class PhotoSearchDetail(APIView):
 
     def get(self, request, pk, format=None):
         photo = self.get_object(pk)
-        result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
+        result_filename = test_single_image_easy_peasy(photo.image.name, photo.latent_filename)
         if result_filename is not None:
             serializer = SearchPhotoSerializer(photo, context={"request": request})
             return Response(serializer.data)

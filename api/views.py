@@ -27,7 +27,7 @@ from api.dnnlib import tflib
 from api import config
 from api.encoder.generator_model import Generator
 from api.encoder.perceptual_model import PerceptualModel
-sys.modules['dnnlib'] = tools
+sys.modules['dnnlib'] = dnnlib
 URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'  # karras2019stylegan-ffhq-1024x1024.pkl
 
 

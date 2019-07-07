@@ -75,7 +75,7 @@ def main(filename):
     # args, other_args = parser.parse_known_args()
     basepath = os.path.dirname(__file__)
     print(os.path.join("..",src_dir))
-    ref_images = [os.path.join(basepath,"..",src_dir, filename.split("/")[1])]
+    ref_images = [os.path.join(basepath,"..",src_dir, filename)]
     ref_images = list(filter(os.path.isfile, ref_images))
 
     if len(ref_images) == 0:

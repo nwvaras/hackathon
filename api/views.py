@@ -239,14 +239,17 @@ class PhotoSearchDetail(APIView):
             photo = Photo.objects.get(pk=pk)
             result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
             if result_filename is not None:
-                pho.result
+                serializer = SearchPhotoSerializer(photo, context={"request": self.request})
+                return Response(serializer.data)
         except Photo.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = SearchPhotoSerializer(photo)
-        return Response(serializer.data)
+        result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
+        if result_filename is not None:
+            serializer = SearchPhotoSerializer(photo, context={"request": request})
+            return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)

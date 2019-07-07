@@ -11,7 +11,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
 
 class SearchPhotoSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Photo
         fields = ('url', 'id', 'image')

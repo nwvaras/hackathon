@@ -24,7 +24,7 @@ import PIL.Image
 import numpy as np
 from .dnnlib import util
 from .dnnlib import tflib as tflib
-import config
+from .config import *
 from encoder.generator_model import Generator
 from encoder.perceptual_model import PerceptualModel
 

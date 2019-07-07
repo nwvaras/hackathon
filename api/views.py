@@ -72,7 +72,7 @@ def main(filename):
     # parser.add_argument('--randomize_noise', default=False, help='Add noise to dlatents during optimization', type=bool)
     randomize_noise= False
     # args, other_args = parser.parse_known_args()
-
+    print(os.path.join("..",src_dir))
     ref_images = [os.path.join("..",src_dir, x) for x in os.listdir(os.path.join("..",src_dir))]
     ref_images = list(filter(os.path.isfile, ref_images))
 

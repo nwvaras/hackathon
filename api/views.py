@@ -28,6 +28,7 @@ from api import config
 from api.encoder.generator_model import Generator
 from api.encoder.perceptual_model import PerceptualModel
 sys.modules['dnnlib'] = dnnlib
+sys.modules['tflib'] = tflib
 URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'  # karras2019stylegan-ffhq-1024x1024.pkl
 
 
@@ -47,7 +48,7 @@ def unpack_bz2(src_path):
 landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
                                                LANDMARKS_MODEL_URL, cache_subdir='temp'))
 landmarks_detector = LandmarksDetector(landmarks_model_path)
-dnnlib.tflib.init_tf()
+tflib.init_tf()
 
 
 def main(filename):

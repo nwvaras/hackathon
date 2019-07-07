@@ -148,7 +148,7 @@ def align(filename):
                 aligned_face_path = os.path.join(ALIGNED_IMAGES_DIR, face_img_name)
 
                 image_align(raw_img_path, aligned_face_path, face_landmarks)
-        main(face_img_name)
+            main(face_img_name)
 
 def index(request):
     return render(request, 'api/index.html')

@@ -76,6 +76,7 @@ def main(filename):
     basepath = os.path.dirname(__file__)
     print(os.path.join("..",src_dir))
     print(filename)
+    print("de file")
     print(os.path.join(basepath,"..",src_dir, filename))
     ref_images = [os.path.join(basepath,"..",src_dir, filename)]
     ref_images = list(filter(os.path.isfile, ref_images))

@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from api.models import Photo
 from api.serializers import PhotoSerializer
 import subprocess
-
+from align_images import align
 def index(request):
     return render(request, 'api/index.html')
 
@@ -45,6 +45,7 @@ class PhotoDetail(APIView):
         serializer = PhotoSerializer(photo, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
+            align()
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

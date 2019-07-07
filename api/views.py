@@ -22,7 +22,7 @@ import pickle
 from tqdm import tqdm
 import PIL.Image
 import numpy as np
-from .dnnlib import dnnlib
+from .dnnlib import util
 from .dnnlib import tflib as tflib
 import config
 from encoder.generator_model import Generator

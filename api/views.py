@@ -136,6 +136,7 @@ def align(filename):
 
 
     for img_name in os.listdir(RAW_IMAGES_DIR):
+        face_img_name=""
         if img_name in filename:
             print("alineando...")
             raw_img_path = os.path.join(RAW_IMAGES_DIR, img_name)
@@ -144,7 +145,7 @@ def align(filename):
                 aligned_face_path = os.path.join(ALIGNED_IMAGES_DIR, face_img_name)
 
                 image_align(raw_img_path, aligned_face_path, face_landmarks)
-    main(filename)
+    main(face_img_name)
 
 def index(request):
     return render(request, 'api/index.html')

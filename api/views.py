@@ -85,7 +85,7 @@ def main(filename):
 
     # Initialize generator and perceptual model
 
-    with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
+    with util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
         generator_network, discriminator_network, Gs_network = pickle.load(f)
 
     generator = Generator(Gs_network, batch_size, randomize_noise=randomize_noise)

@@ -6,7 +6,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.generate_figures import test_single_image
+from api.generate_figures import test_single_image, test_single_image_easy_peasy
 from api.models import Photo
 from api.serializers import PhotoSerializer, SearchPhotoSerializer
 import subprocess
@@ -226,10 +226,6 @@ class PhotoSearchList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def test_single_image_easy_peasy(name, param, w, h, src_seeds, dst_seeds, style_ranges):
-    pass
-
-
 class PhotoSearchDetail(APIView):
 
     permission_classes = (permissions.AllowAny,)
@@ -237,20 +233,23 @@ class PhotoSearchDetail(APIView):
     def get_object(self, pk):
         try:
             photo = Photo.objects.get(pk=pk)
-            result_filename = test_single_image_easy_peasy(photo.result_image.name, photo.latent_filename)
+            result_filename = test_single_image_easy_peasy(photo.image.name, photo.latent_filename)
             if result_filename is not None:
-                pho.result
+                serializer = SearchPhotoSerializer(photo, context={"request": self.request})
+                return Response(serializer.data)
         except Photo.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = SearchPhotoSerializer(photo)
-        return Response(serializer.data)
+        result_filename = test_single_image_easy_peasy(photo.image.name, photo.latent_filename)
+        if result_filename is not None:
+            serializer = SearchPhotoSerializer(photo, context={"request": request})
+            return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         photo = self.get_object(pk)
-        serializer = SearchPhotoSerializer(photo, data=request.DATA)
+        serializer = SearchPhotoSerializer(photo, data=request.DATA, context={'request': request})
         if serializer.is_valid():
             instance = serializer.save()
             # print(subprocess.run(["python align_images.py ../api/media/photos/ ../api/media/aligned_photos/"]))
